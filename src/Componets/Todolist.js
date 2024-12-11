@@ -29,6 +29,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { type } from '@testing-library/user-event/dist/type';
 
 
 
@@ -36,7 +37,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function Todolist() {
-  const { todos2, setTodos } = useContext(TodosContext)
   const [titleInput, setTitle] = useState("")
   const [displayedTodos, setDisplayedTodos] = useState("all")
   const [showModel, setShowModel] = useState(false)
@@ -83,11 +83,7 @@ export default function Todolist() {
     setShowModel(false)
   }
   function handleDeleteComfirm() {
-    const updatedTodos = todos.filter((t) => {
-      return t.id != DialogTodo.id
-    })
-    setTodos(updatedTodos)
-    localStorage.setItem("todos", JSON.stringify(updatedTodos))
+    dispatch({ type: "deleted", payload: DialogTodo })
     setShowModel(false)
     ShowHideToast("Deleted successfully")
   }
@@ -105,15 +101,8 @@ export default function Todolist() {
   }
 
   function handleUpdateComfirm() {
-    const updatedTodosList = todos.map((t) => {
-      if (t.id === DialogTodo.id) {
-        return { ...t, title: DialogTodo.title, details: DialogTodo.details };
-      }
-      return t;
-    });
-    setTodos(updatedTodosList);
+    dispatch({ type: "updated", payload: DialogTodo })
     setShowModelUpdate(false);
-    localStorage.setItem("todos", JSON.stringify(updatedTodosList))
     ShowHideToast("Modified successfully")
   }
 
@@ -135,16 +124,11 @@ export default function Todolist() {
 
 
   useEffect(() => {
-    const storageTodos = JSON.parse(localStorage.getItem("todos"));
-    if (storageTodos) {
-      setTodos(storageTodos);
-    } else {
-      setTodos([]); // إذا لم يكن هناك بيانات، اجعلها قائمة فارغة
-    }
+    dispatch({ type: "get" })
   }, []);
 
   function handleAddClick() {
-    dispatch({type:"added",payload:{newTitle:titleInput}})
+    dispatch({ type: "added", payload: { newTitle: titleInput } })
     setTitle("")
     ShowHideToast("Added successfully")
   }
