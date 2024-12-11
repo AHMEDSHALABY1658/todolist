@@ -1,23 +1,38 @@
 import logo from './logo.svg';
 import './App.css';
+import Todolist from './Componets/Todolist'
+import { TodosContext } from './contexts/TodosContext';
+import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import MySnackBar from './Componets/MySnackBar';
+import { ToastProvider } from './contexts/ToastContext';
+
+
+const initialTodos = [
+  {
+    id: uuidv4(),
+    title: "fasdfaf",
+    details: "fdafaf",
+    isCopleted: false
+  }
+
+]
+
+
 
 function App() {
+  const [todos, setTodos] = useState(initialTodos)
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TodosContext.Provider value={{ todos, setTodos }}>
+        <ToastProvider >
+      
+          <Todolist />
+        </ToastProvider>
+      </TodosContext.Provider>
     </div>
   );
 }

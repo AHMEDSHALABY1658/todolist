@@ -1,7 +1,20 @@
 .App {
-  text-align: center;
-}
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+text-align: center;
+/* direction: rtl; */
+background: #17191a;
 
+}
+.IconButton{
+  transition: all 0.2s !important;
+}
+.IconButton:hover{
+background-color: #c5c5c5 !important;
+box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
