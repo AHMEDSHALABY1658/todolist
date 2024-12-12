@@ -15,12 +15,12 @@ import TextField from '@mui/material/TextField';
 import { v4 as uuidv4 } from 'uuid';
 import { colors } from '@mui/material';
 import Todo from './Todo';
-import { useContext, useEffect, useState, useMemo, useReducer } from 'react';
-import { TodosContext } from '../contexts/TodosContext';
+import { useState, useEffect, useMemo, useReducer, useContext } from 'react';
+import todosReducer from '../reducers/todoReducer'
+import { TodosContext, useTodos } from '../contexts/TodosContext';
 import { ToastContext } from '../contexts/ToastContext';
 
 
-import todosReducer from '../reducers/todoReducer'
 
 
 // delete
@@ -45,8 +45,8 @@ export default function Todolist() {
   const [updateTodo, SetUpdateTodo] = useState();
   const { ShowHideToast } = useContext(ToastContext)
 
-  const [todos, dispatch] = useReducer(todosReducer, [])
 
+  const { todos, dispatch } = useTodos()
   //filteration arrays
 
   const completedTodos = useMemo(() => {

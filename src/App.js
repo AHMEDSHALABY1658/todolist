@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Todolist from './Componets/Todolist'
-import { TodosContext } from './contexts/TodosContext';
+import TodosProvider, { TodosContext } from './contexts/TodosContext';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import MySnackBar from './Componets/MySnackBar';
@@ -27,12 +27,11 @@ function App() {
 
   return (
     <div className="App">
-      <TodosContext.Provider value={{ todos, setTodos }}>
+      <TodosProvider>
         <ToastProvider >
-      
           <Todolist />
         </ToastProvider>
-      </TodosContext.Provider>
+      </TodosProvider>
     </div>
   );
 }

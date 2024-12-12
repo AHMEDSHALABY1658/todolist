@@ -9,38 +9,30 @@ import EditIcon from '@mui/icons-material/Edit';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid2';
 
-import { useContext } from 'react';
-import { TodosContext } from '../contexts/TodosContext';
+import { useTodos } from '../contexts/TodosContext';
 import { ToastContext } from '../contexts/ToastContext';
-// delete
 
 
-import { useState } from 'react';
+import { useContext } from 'react';
+import todosReducer from '../reducers/todoReducer'
 
 
-export default function Todo({ todo, ShowDelete,showUpdate }) {
-    const[updateTodo,SetUpdateTodo]=useState({title:todo.title,details:todo.details});
-    const { todos, setTodos } = useContext(TodosContext)
-    const {ShowHideToast}= useContext(ToastContext)
 
+
+export default function Todo({ todo, ShowDelete, showUpdate }) {
+    const { ShowHideToast } = useContext(ToastContext)
+    const { todos, dispatch } = useTodos()
     function handleCheckClick() {
-        const updatedTodos = todos.map((t) => {
-            if (t.id == todo.id) {
-                t.isCopleted = !t.isCopleted;
-            }
-            return t
-        })
-        setTodos(updatedTodos)
-        localStorage.setItem("todos", JSON.stringify(updatedTodos))
+        dispatch({ type: "toggleCompleted", payload: todo })
         ShowHideToast("Modified successfully")
     }
-    function handleDeleteClick(){
+    function handleDeleteClick() {
         ShowDelete(todo);
     }
 
 
 
-    function handleUpdateClick(){
+    function handleUpdateClick() {
         showUpdate(todo)
     }
     return (
@@ -50,7 +42,7 @@ export default function Todo({ todo, ShowDelete,showUpdate }) {
                 <CardContent>
                     <Grid container spacing={2} alignItems="center">
                         <Grid size={8}>
-                            <Typography variant='h5' sx={{textAlign: "left", textDecoration: todo.isCopleted ? "line-through ":"none" }} > {todo.title}</Typography>
+                            <Typography variant='h5' sx={{ textAlign: "left", textDecoration: todo.isCopleted ? "line-through " : "none" }} > {todo.title}</Typography>
                             <Typography variant='h6' sx={{ textAlign: "left " }} > {todo.details} </Typography>
                         </Grid>
                         <Grid size={4} display="flex" justifyContent="space-around">
@@ -64,7 +56,7 @@ export default function Todo({ todo, ShowDelete,showUpdate }) {
                                 {/* update icon button*/}
                                 <EditIcon />
                             </IconButton>
-                            <IconButton aria-label="delete" className='IconButton' style={{ color: "red", background: "white", border: "solid red 2px" }}onClick={handleDeleteClick}>
+                            <IconButton aria-label="delete" className='IconButton' style={{ color: "red", background: "white", border: "solid red 2px" }} onClick={handleDeleteClick}>
                                 {/* Delete icon button*/}
                                 <DeleteIcon />
                             </IconButton>

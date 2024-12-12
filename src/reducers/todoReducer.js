@@ -42,6 +42,20 @@ export default function Reducer(currentTodos, action) {
             // إذا لم يكن هناك بيانات، اجعلها قائمة فارغة
             }
         }
+        case "toggleCompleted": {
+            const updatedTodos = currentTodos.map((t) => {
+                if (t.id == action.payload.id) {
+                    const updateTodo={
+                        ...t, isCopleted :  !t.isCopleted
+                    }
+                    return updateTodo
+                }
+                return t
+            })
+            localStorage.setItem("todos", JSON.stringify(updatedTodos))
+            return(updatedTodos)
+        }
+
         default: {
             throw Error("UnKnow Action" + action.type)
         }
