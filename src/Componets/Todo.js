@@ -39,7 +39,7 @@ export default function Todo({ todo, ShowDelete, showUpdate }) {
         <>
 
             <Card sx={{ minWidth: 275, background: "#283593", color: "white", marginTop: "9px" }}>
-                <CardContent>
+                <CardContent className='CardContent' >
                     <Grid container spacing={2} alignItems="center">
                         <Grid size={8}>
                             <Typography variant='h5' sx={{ textAlign: "left", textDecoration: todo.isCopleted ? "line-through " : "none" }} > {todo.title}</Typography>

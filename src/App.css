@@ -49,3 +49,9 @@ box-shadow: 0px 7px 7px rgba(0, 0, 0, 0.4);
     transform: rotate(360deg);
   }
 }
+
+@media (max-width:390px){
+.CardContent{
+  width: 75%;
+}
+}
